@@ -178,9 +178,17 @@ Modifiez le code afin d'utiliser un conteneur STL plus adapté. Normalement, à 
 
 1) Comment a-t-on fait pour que seule la classe `Tower` puisse réserver un terminal de l'aéroport ?
 
+```
+Pour que seule la classe Tower puisse réserver des terminal de l’aéroport il a fallut faire en sorte de garder les terminaux réservables et lui passer un champ faisant référence a l aéroport, ainsi il peut regarder quel terminal est libre et ainsi le réserver ou non.
+
+```
+
 2) En regardant le contenu de la fonction `void Aircraft::turn(Point3D direction)`, pourquoi selon-vous ne sommes-nous pas passer par une réference ?
 Pensez-vous qu'il soit possible d'éviter la copie du `Point3D` passé en paramètre ?
 
+```
+En regardant la fonction « void Aircraft::turn(Point3D direction », nous ne sommes pas passer par références, car nous voulons garder notre point sans aucune modification, or la fonction cap_length modifiera la valeur de celui-ci.
+```
 ## E- Bonus
 
 Le temps qui s'écoule dans la simulation dépend du framerate du programme.
