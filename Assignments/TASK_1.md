@@ -98,6 +98,13 @@ A quelle ligne faut-il définir `context_initializer` dans `TowerSimulation` pou
 Refactorisez le restant du code pour utiliser votre factory.
 Vous devriez du coup pouvoir supprimer les variables globales `airlines` et `aircraft_types`.
 
+```
+
+La création de notre Factory nous permet de supprimer deux variables globales. De plus, notre factory pourra être stocké notre classe tower_simulation, étant donné que c’est depuis cet endroit que l’ont créait des avions auparavant.
+Le conteneur permettant d’éviter les avions en double on peu utiliser un set, car on sais que dans ce genre de conteneur il est impossible d’avoir un élément en double.
+```
+
+
 ### B - Conflits
 
 Il est rare, mais possible, que deux avions soient créés avec le même numéro de vol.
