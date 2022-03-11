@@ -64,12 +64,12 @@ public:
 
     void display() const override { texture.draw(project_2D(pos), { 2.0f, 2.0f }); }
 
-    bool move() override
+    bool update() override
     {   
 
         for (auto& t : terminals)
         {
-            t.move();
+            t.update();
         }
         return true ;
     }

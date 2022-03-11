@@ -80,7 +80,7 @@ void timer(const int step)
         for (auto iterator= move_queue.begin(); iterator != move_queue.end();)
         {
             auto *item = *iterator;
-            if (!item->move())
+            if (!item->update())
             {
                 iterator = move_queue.erase(iterator);
                 delete item;

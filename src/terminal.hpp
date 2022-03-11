@@ -39,7 +39,7 @@ public:
         }
     }
 
-    bool move() override
+    bool update() override
     {
         if (in_use() && is_servicing())
         {

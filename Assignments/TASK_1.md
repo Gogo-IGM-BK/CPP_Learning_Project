@@ -9,6 +9,11 @@ Si à un moment quelconque du programme, vous souhaitiez accéder à l'avion aya
 
 ---
 
+```
+Pour l instant il n’est pas possible de récupérer l’avion avec le numéro de vol « AF1250 », a moins de parcourir la display_queue ou la move_queue, tester si l’objet en question est bien un avion, puis tester s’il a bien le numéro de vol voulu, mais dans l’optique de le faire, il serait possible de stocker tous les avions qui sont en vol dans un conteneur, et faire une méthode qui va parcourir ce conteneur et nous renvoyer l’avion qui a ce numéro de vol, ou un nullptr sinon.
+
+```
+
 ## Objectif 1 - Référencement des avions
 
 ### A - Choisir l'architecture
@@ -23,6 +28,13 @@ Réfléchissez aux pour et contre de chacune de ces options.
 
 Pour le restant de l'exercice, vous partirez sur le premier choix.
 
+```
+Le principal avantage de créer une classe est de déléguer le fait de stocker tous les avions à une classe en particulier, cependant l’inconvénient principal est qu’on doit remodeler le programme afin de respecter l’ancien comportement avec l’arrive de cette nouvelle classe.
+Le principal avantage de donner ce rôle à une classe existante est qu’il sera simple et rapide à implémenter, mais l’inconvénient sera que notre classe s’occupera d’une action qu’elle n’est pas censé faire, on ne repecte pas les principes de programmation dit SOLID, notamment le S : Single-responsability.
+````
+
+
+
 ### B - Déterminer le propriétaire de chaque avion
 
 Vous allez introduire une nouvelle liste de références sur les avions du programme.
@@ -33,6 +45,12 @@ Répondez aux questions suivantes :
 2. Quelles autres structures contiennent une référence sur un avion au moment où il doit être détruit ?
 3. Comment fait-on pour supprimer la référence sur un avion qui va être détruit dans ces structures ?
 4. Pourquoi n'est-il pas très judicieux d'essayer d'appliquer la même chose pour votre `AircraftManager` ?
+
+```
+C’est timer dans la classe opengl_interface qui se charge de la destruction des avions. Les autres structures contenant une réference sur un avion au moment de sa destruction sont move_queue et display_queue.
+Il suffit de rajouter un erase au destructeur des différents endroits ou un avion est référencé.
+Notre AircraftManager ne peut pas avoir la même application car pour ça il faudrait que la classe aircraft extends un aircraft_manager, et faire un conteneur de celui-ci, ce qui n'a pas beaucoup de sens, de plus notre aircraftManager est censé avoir une durée de vie équivalente a celle du programme.
+```
 
 Pour simplifier le problème, vous allez déplacer l'ownership des avions dans la classe `AircraftManager`.
 Vous allez également faire en sorte que ce soit cette classe qui s'occupe de déplacer les avions, et non plus la fonction `timer`.
