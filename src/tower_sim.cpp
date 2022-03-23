@@ -70,7 +70,17 @@ void TowerSimulation::create_keystrokes()
     GL::keystrokes.emplace('+', []() { GL::change_zoom(0.95f); });
     GL::keystrokes.emplace('-', []() { GL::change_zoom(1.05f); });
     GL::keystrokes.emplace('f', []() { GL::toggle_fullscreen(); });
-    
+
+
+    GL::keystrokes.emplace('0', [this]() { std::cout << manager.nbAirk(factory->airlines[0]) << std::endl; });
+    GL::keystrokes.emplace('1', [this]() { std::cout << manager.nbAirk(factory->airlines[1]) << std::endl; });
+    GL::keystrokes.emplace('2', [this]() { std::cout << manager.nbAirk(factory->airlines[2]) << std::endl; });
+    GL::keystrokes.emplace('3', [this]() { std::cout << manager.nbAirk(factory->airlines[3]) << std::endl; });
+        
+    GL::keystrokes.emplace('4', [this]() { std::cout << manager.nbAirk(factory->airlines[4]) << std::endl; });
+    GL::keystrokes.emplace('5', [this]() { std::cout << manager.nbAirk(factory->airlines[5]) << std::endl; });
+    GL::keystrokes.emplace('7', [this]() { std::cout << manager.nbAirk(factory->airlines[7]) << std::endl; });
+    GL::keystrokes.emplace('6', [this]() { std::cout << manager.nbAirk(factory->airlines[6]) << std::endl; });
 }
 
 void TowerSimulation::display_help() const
@@ -92,7 +102,7 @@ void TowerSimulation::init_airport()
                             new img::Image { one_lane_airport_sprite_path.get_full_path() } };
 
 
-    // GL::move_queue.emplace(airport);
+    GL::move_queue.emplace(airport);
     GL::move_queue.emplace(&manager);
 
 }
