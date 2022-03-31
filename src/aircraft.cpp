@@ -92,15 +92,15 @@ bool Aircraft::update()
 {
     if (waypoints.empty())
     {
+        if(is_service_done ){
+            return false; 
+        }
+
         waypoints = control.get_instructions(*this);
     }
 
     if (!is_at_terminal)
     {   
-        if (waypoints.empty())
-        {
-            return false;
-        }
         
         turn_to_waypoint();
         // move in the direction of the current speed
@@ -130,6 +130,20 @@ bool Aircraft::update()
         }
         else
         {
+            if (--fuel == 0){
+                std::cout<< flight_number+"is crash"<< std::endl;
+            
+            }
+            if(!has_terminal()){
+                auto tmp = control.reserve_terminal(*this);
+                if (!tmp.empty()){
+                    waypoints.clear();
+                    waypoints = std::move(tmp);
+                }
+            }
+
+
+
             // if we are in the air, but too slow, then we will sink!
             const float speed_len = speed.length();
             if (speed_len < SPEED_THRESHOLD)
@@ -147,4 +161,21 @@ bool Aircraft::update()
 void Aircraft::display() const
 {
     type.texture.draw(project_2D(pos), { PLANE_TEXTURE_DIM, PLANE_TEXTURE_DIM }, get_speed_octant());
+}
+
+
+bool Aircraft::has_terminal() const 
+{
+    return !waypoints.empty() && !waypoints.back().is_at_terminal();
+}
+
+
+bool Aircraft::is_circling() const 
+{
+    return !waypoints.empty() && !waypoints.back().is_on_ground() && !is_service_done;
+}
+
+bool Aircraft::is_low_on_fuel() const 
+{
+    return fuel<200;
 }

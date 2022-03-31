@@ -20,6 +20,8 @@ private:
     Tower& control;
     bool landing_gear_deployed = false; // is the landing gear deployed?
     bool is_at_terminal        = false;
+    bool is_service_done       = false;
+    int fuel ;
 
     // turn the aircraft to arrive at the next waypoint
     // try to facilitate reaching the waypoint after the next by facing the
@@ -46,13 +48,14 @@ private:
 
 public:
     Aircraft(const AircraftType& type_, const std::string_view& flight_number_, const Point3D& pos_,
-             const Point3D& speed_, Tower& control_) :
+             const Point3D& speed_, Tower& control_, const int fuel_) :
         GL::Displayable { pos_.x() + pos_.y() },
         type { type_ },
         flight_number { flight_number_ },
         pos { pos_ },
         speed { speed_ },
-        control { control_ }
+        control { control_ },
+        fuel { fuel_}
     {
         speed.cap_length(max_speed());
     }
@@ -62,6 +65,16 @@ public:
 
     void display() const override;
     bool update() override;
+
+    bool has_terminal() const ;
+    bool is_circling() const ;
+
+    bool operator<(const std::unique_ptr<Aircraft>& air){
+        return has_terminal()> air->has_terminal() && fuel<air->fuel;
+    }
+
+    bool is_low_on_fuel() const;
+
 
     friend class Tower;
 };
