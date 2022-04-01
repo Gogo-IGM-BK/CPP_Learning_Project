@@ -36,7 +36,7 @@ class AircraftFactory
         
         const std::string flight_number = airlines[std::rand() % 8] + std::to_string(1000 + (rand() % 9000));
         if(flying_nb.count(flight_number)>=1){
-            return nullptr;
+            return create_aircraft(type,airport);
         }
         flying_nb.insert(flight_number);
         const float angle       = (rand() % 1000) * 2 * 3.141592f / 1000.f; // random angle between 0 and 2pi

@@ -90,18 +90,25 @@ void Aircraft::add_waypoint(const Waypoint& wp, const bool front)
 
 bool Aircraft::update()
 {
+    if(is_circling()){
+        auto tmp = control.reserve_terminal(*this);
+        if (!tmp.empty()){
+            waypoints = std::move(tmp);
+        }
+    }
+
     if (waypoints.empty())
     {
-        if(is_service_done ){
-            return false; 
-        }
-
         waypoints = control.get_instructions(*this);
     }
 
     if (!is_at_terminal)
     {   
         
+        if(waypoints.empty() ){
+            return false; 
+        }
+
         turn_to_waypoint();
         // move in the direction of the current speed
         pos += speed;
@@ -132,14 +139,9 @@ bool Aircraft::update()
         {
             if (--fuel == 0){
                 std::cout<< flight_number+"is crash"<< std::endl;
+                return false ;
+                
             
-            }
-            if(!has_terminal()){
-                auto tmp = control.reserve_terminal(*this);
-                if (!tmp.empty()){
-                    waypoints.clear();
-                    waypoints = std::move(tmp);
-                }
             }
 
 

@@ -69,11 +69,12 @@ public:
     bool has_terminal() const ;
     bool is_circling() const ;
 
-    bool operator<(const std::unique_ptr<Aircraft>& air){
-        return has_terminal()> air->has_terminal() && fuel<air->fuel;
-    }
+    
 
     bool is_low_on_fuel() const;
+    int get_fuel() const{
+        return fuel;
+    }
 
 
     friend class Tower;
