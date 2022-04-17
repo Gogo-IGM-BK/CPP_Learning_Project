@@ -46,7 +46,12 @@ private:
     Aircraft(const Aircraft&) = delete;
     Aircraft& operator=(const Aircraft&) = delete;
 
+     int initFuel() const {return (random() % (MAXI_FUEL - MIN_FUEL)) + MIN_FUEL;}
+
 public:
+    
+    static constexpr int MAXI_FUEL = 3000; 
+    static constexpr int MIN_FUEL = 150;  
     Aircraft(const AircraftType& type_, const std::string_view& flight_number_, const Point3D& pos_,
              const Point3D& speed_, Tower& control_, const int fuel_) :
         GL::Displayable { pos_.x() + pos_.y() },
@@ -69,7 +74,8 @@ public:
     bool has_terminal() const ;
     bool is_circling() const ;
 
-    
+    bool service_finished() const{return is_service_done;};   
+    void refill(int &fuel_stock);
 
     bool is_low_on_fuel() const;
     int get_fuel() const{

@@ -181,3 +181,19 @@ bool Aircraft::is_low_on_fuel() const
 {
     return fuel<200;
 }
+
+void Aircraft::refill(int &fuel_stock)
+{
+    assert(fuel_stock>=0);
+    int toRefill = initFuel() ;
+    
+    // fuel_stock = (tmp = (fuel_stock - initFuel()) < 0) ? 0  : tmp;
+    // fuel += tmp ;
+    if(fuel_stock<toRefill){
+        toRefill = fuel_stock;
+    }
+    fuel+=toRefill;
+    fuel_stock = fuel_stock == toRefill ? 0 : fuel_stock - toRefill;
+    if(toRefill > 0) 
+    std::cout << flight_number << " has been refulling with " << toRefill << "l"<< std::endl;   
+}

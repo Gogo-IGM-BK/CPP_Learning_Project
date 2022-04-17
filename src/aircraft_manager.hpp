@@ -16,5 +16,6 @@ public:
 
     bool update() override;
     int nbAirk(const std::string& airline);
+    int get_required_fuel() const;
 
 };

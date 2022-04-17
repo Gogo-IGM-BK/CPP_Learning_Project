@@ -20,3 +20,13 @@ int AircraftManager::nbAirk(const std::string& airline){
     
 }
 
+int AircraftManager::get_required_fuel() const
+{
+    
+    return std::accumulate(aircrafts.begin(),aircrafts.end(),0,[](const int acc,const std::unique_ptr<Aircraft> &a)
+    {if( a->is_low_on_fuel() && !a->service_finished()) 
+        return acc + (Aircraft::MAXI_FUEL - a->get_fuel()) ; 
+    return acc;});
+    
+}
+
